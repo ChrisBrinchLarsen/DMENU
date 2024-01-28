@@ -4,7 +4,7 @@
 static int topbar = 0;                      /* -b  option; if 0, dmenu appears at bottom     */
 static int centered = 1;                    /* -c option; centers dmenu on screen */
 static int min_width = 250; 	            /* minimum width when centered        */
-static const unsigned int alpha = 0xBF;     /* Amount of opacity. 0xff is opaque  */
+static const unsigned int alpha = 0xA6;     /* Amount of opacity. 0xff is opaque  */
 /* -fn option overrides fonts[0]; default X11 font or font set */
 static const char *fonts[] = {
 	"Fira Code:size=12"
@@ -17,7 +17,7 @@ static const char *colors[SchemeLast][2] = {
 	[SchemeSelHighlight] = { "#ffc978", "#005577" },
 	[SchemeNormHighlight]= { "#ffc978", "#222222" },
 	[SchemeOut] = { "#30FFA4", "#044B4A" },
-	[SchemeBorder] = { "#cccccc", NULL },
+	[SchemeBorder] = { "#30FFA4", NULL },
 	[SchemeOutHighlight] = { "#ffc978", "#00ffff" },
 };
 
@@ -36,5 +36,5 @@ static unsigned int lines      = 5;
 static const char worddelimiters[] = " ";
 
 /* Size of the window border */
-static unsigned int border_width = 0;
+static unsigned int border_width = 2;
 
