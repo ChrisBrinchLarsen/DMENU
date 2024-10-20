@@ -1,24 +1,36 @@
 --- dmenu.c
 +++ dmenu.c
-@@ -26,7 +26,7 @@
- #define TEXTW(X)              (drw_fontset_getwidth(drw, (X)) + lrpad)
+@@ -57,10 +61,16 @@ static XIC xic;
+ static Drw *drw;
+ static Clr *scheme[SchemeLast];
  
- /* enums */
--enum { SchemeNorm, SchemeSel, SchemeOut, SchemeLast }; /* color schemes */
-+enum { SchemeNorm, SchemeSel, SchemeOut, SchemeBorder, SchemeLast }; /* color schemes */
++static int useargb = 0;
++static Visual *visual;
++static int depth;
++static Colormap cmap;
++
+ #include "config.h"
  
- struct item {
- 	char *text;
-@@ -685,9 +685,11 @@ setup(void)
+ static int (*fstrncmp)(const char *, const char *, size_t) = strncmp;
+ static char *(*fstrstr)(const char *, const char *) = strstr;
++static void xinitvisual();
+ 
+ static unsigned int
+ textw_clamp(const char *str, unsigned int n)
+@@ -686,11 +696,13 @@ setup(void)
+ 
+ 	/* create menu window */
  	swa.override_redirect = True;
- 	swa.background_pixel = scheme[SchemeNorm][ColBg].pixel;
+-	swa.background_pixel = scheme[SchemeNorm][ColBg].pixel;
++	swa.background_pixel = 0;
++	swa.border_pixel = 0;
++	swa.colormap = cmap;
  	swa.event_mask = ExposureMask | KeyPressMask | VisibilityChangeMask;
--	win = XCreateWindow(dpy, root, x, y, mw, mh, 0,
-+	win = XCreateWindow(dpy, root, x, y, mw, mh, border_width,
- 	                    CopyFromParent, CopyFromParent, CopyFromParent,
- 	                    CWOverrideRedirect | CWBackPixel | CWEventMask, &swa);
-+	if (border_width)
-+		XSetWindowBorder(dpy, win, scheme[SchemeBorder][ColFg].pixel);
+ 	win = XCreateWindow(dpy, parentwin, x, y, mw, mh, 0,
+-	                    CopyFromParent, CopyFromParent, CopyFromParent,
+-	                    CWOverrideRedirect | CWBackPixel | CWEventMask, &swa);
++	                    depth, CopyFromParent, visual,
++	                    CWOverrideRedirect | CWBackPixel | CWBorderPixel | CWColormap | CWEventMask, &swa);
  	XSetClassHint(dpy, win, &ch);
  
  

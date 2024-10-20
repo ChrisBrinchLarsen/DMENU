@@ -1,24 +1,31 @@
 /* See LICENSE file for copyright and license details. */
 /* Default settings; can be overriden by command line. */
 
-static int topbar = 0;                      /* -b  option; if 0, dmenu appears at bottom     */
+static int topbar = 1;                      /* -b  option; if 0, dmenu appears at bottom     */
+static const unsigned int alpha = 0xff;     /* Amount of opacity. 0xff is opaque             */
 static int centered = 1;                    /* -c option; centers dmenu on screen */
-static int min_width = 250; 	            /* minimum width when centered        */
-static const unsigned int alpha = 0xBF;     /* Amount of opacity. 0xff is opaque  */
+static int min_width = 200;                    /* minimum width when centered */
 /* -fn option overrides fonts[0]; default X11 font or font set */
+static const int user_bh = 0;               /* add an defined amount of pixels to the bar height */
+
 static const char *fonts[] = {
-	"Fira Code:size=12"
+	"JetBrainsMono:size=14"
 };
 static const char *prompt      = NULL;      /* -p  option; prompt to the left of input field */
+
+static const char col_text[]   = "#f6f1ee";
+static const char col_dark[]   = "#1e1c19";
+static const char col_mid[]    = "#6c5f5b";
+static const char col_bright[] = "#ed7d31";
+
 static const char *colors[SchemeLast][2] = {
-	/*                   fg         bg       */
-	[SchemeNorm] = { "#30FFA4", "#031624" },
-	[SchemeSel] = { "#031624", "#30FFA4" },
-	[SchemeSelHighlight] = { "#ffc978", "#005577" },
-	[SchemeNormHighlight]= { "#ffc978", "#222222" },
-	[SchemeOut] = { "#30FFA4", "#044B4A" },
-	[SchemeBorder] = { "#cccccc", NULL },
-	[SchemeOutHighlight] = { "#ffc978", "#00ffff" },
+	/*     fg         bg       */
+	[SchemeNorm]          = { col_text  , col_dark   },
+	[SchemeSel]           = { col_dark  , col_bright },
+	[SchemeSelHighlight]  = { col_text  , col_mid    },
+	[SchemeNormHighlight] = { col_bright, col_dark   },
+	[SchemeOut]           = { "#bf0cd8" , "#bf0cd8"  },
+	[SchemeOutHighlight]  = { "#bf0cd8" , "#bf0cd8"  },
 };
 
 static const unsigned int alphas[SchemeLast][2] = {
@@ -36,5 +43,4 @@ static unsigned int lines      = 5;
 static const char worddelimiters[] = " ";
 
 /* Size of the window border */
-static unsigned int border_width = 0;
-
+static unsigned int border_width = 3;
